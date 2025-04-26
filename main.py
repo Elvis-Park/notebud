@@ -4,12 +4,21 @@ from note import Note
 
 noteslist=[]
 
+def safetybud():
+    #title,desc,date,importance
+    for note in noteslist:
+        if note.isonetime==False:
+            with open("datapal.txt","w") as file:
+                result=f"{note.title},{note.desc},{note.date},{note.isimportant},{note.isonetime}"
+                file.write(result)
+
 
 while True:
     user=input(
             (Fore.LIGHTGREEN_EX+"1. add new\n" ) + 
             (Fore.CYAN+"2. note search\n")+
             (Fore.BLACK+"3. list notes\n")+
+            (Fore.RED+"4. delete notes\n")+
             Style.RESET_ALL)
 
     if user == "1":
@@ -17,14 +26,38 @@ while True:
         d=input("Enter the description and stop scrolling through tiktok: ")
         da= date.today().strftime("%m/%d/%Y")
         ii=input("is this note important, if you say it isnt thats my dinner (y/n): ")
-
+        io=input("ARE YOU SURE YOU WANT TO DELETE THIS NOTE!!! (y/n): ")
         if ii=="y":
             ii=True
         else:
             ii=False
 
-        note=Note(t,d,da,ii)
+        if io=="y":
+            io=True
+        else:
+            io=False
+
+        note=Note(t,d,da,ii,io)
         noteslist.append(note)
+        safetybud()
+    elif user == "2":
+        t=input("Select a title, and do your homework: ")
+        for i in noteslist:
+            if i.title==t:
+                print(i)
+    elif user == "3":
+        for i in noteslist:
+            print(i)
+    elif user =="4":
+        title=input("salutations user,This app requests that thou select a role to vainquish: ")
+        for i in range(len(noteslist)):
+            if noteslist[i].title == title:
+                noteslist.pop(i)
+        safetybud()
+
+        
+
+
 
 
 
