@@ -4,12 +4,41 @@ from note import Note
 
 noteslist=[]
 
+with open("datapal.txt","r") as file:
+    lines = file.readlines()
+    for line in lines:
+        line = line.strip()
+        noteinfo=line.split(",")
+        title=noteinfo[0]
+        desc=noteinfo[1]
+        d=noteinfo[2]
+        ii=noteinfo[3]
+        ot=noteinfo[4]
+        
+        if ii=="True":
+            ii=True
+        else:
+            ii=False
+            
+        if ot=="True":
+            ot=True
+        else:
+            ot=False
+
+        note=Note(title,desc,d,ii,ot)
+        noteslist.append(note)
+
+
+
 def safetybud():
     #title,desc,date,importance
+    with open("datapal.txt","w") as file:
+        file.write("")
+    
     for note in noteslist:
         if note.isonetime==False:
-            with open("datapal.txt","w") as file:
-                result=f"{note.title},{note.desc},{note.date},{note.isimportant},{note.isonetime}"
+            with open("datapal.txt","a") as file:
+                result=f"{note.title},{note.desc},{note.date},{note.isimportant},{note.isonetime}\n"
                 file.write(result)
 
 
